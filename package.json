@@ -1,7 +1,7 @@
 {
   "name": "firawmerge",
   "productName": "FirawMerge",
-  "version": "0.3.0",
+  "version": "0.3.1",
   "description": "Comparação, merge e revisão compartilhável de arquivos e ambientes",
   "author": "Firawynix",
   "license": "MIT",
@@ -43,20 +43,43 @@
       "node_modules/diff/**/*"
     ],
     "extraFiles": [
-      { "from": "shell/build/FirawExplorerCommand.dll", "to": "FirawExplorerCommand.dll" },
-      { "from": "shell/build/x86/FirawExplorerCommand.dll", "to": "support/x86/FirawExplorerCommand.dll" },
-      { "from": "shell/package/Assets", "to": "Assets" },
-      { "from": "shell/build/FirawMerge.Context.msix", "to": "support/FirawMerge.Context.msix" },
-      { "from": "shell/build/FirawMergeContext.cer", "to": "support/FirawMergeContext.cer" },
-      { "from": "installer/register.ps1", "to": "support/register.ps1" },
-      { "from": "installer/unregister.ps1", "to": "support/unregister.ps1" }
+      {
+        "from": "shell/build/FirawExplorerCommand.dll",
+        "to": "FirawExplorerCommand.dll"
+      },
+      {
+        "from": "shell/build/x86/FirawExplorerCommand.dll",
+        "to": "support/x86/FirawExplorerCommand.dll"
+      },
+      {
+        "from": "shell/package/Assets",
+        "to": "Assets"
+      },
+      {
+        "from": "shell/build/FirawMerge.Context.msix",
+        "to": "support/FirawMerge.Context.msix"
+      },
+      {
+        "from": "shell/build/FirawMergeContext.cer",
+        "to": "support/FirawMergeContext.cer"
+      },
+      {
+        "from": "installer/register.ps1",
+        "to": "support/register.ps1"
+      },
+      {
+        "from": "installer/unregister.ps1",
+        "to": "support/unregister.ps1"
+      }
     ],
     "win": {
       "icon": "assets/icon.ico",
       "artifactName": "FirawMerge-${version}-${arch}.${ext}",
       "signtoolOptions": {
         "certificateSha1": "668BEF56480FCA8EB1B0BC3B102A6A9CEC554CC4",
-        "signingHashAlgorithms": ["sha256"],
+        "signingHashAlgorithms": [
+          "sha256"
+        ],
         "publisherName": "Firawynix"
       },
       "target": [
@@ -81,6 +104,11 @@
       "appPackageUrl": "https://firawmerge.firawynix.com.br/downloads/",
       "artifactName": "FirawMerge-${version}-Online-Setup.${ext}"
     },
-    "publish": [{ "provider": "generic", "url": "https://firawmerge.firawynix.com.br/downloads/" }]
+    "publish": [
+      {
+        "provider": "generic",
+        "url": "https://firawmerge.firawynix.com.br/downloads/"
+      }
+    ]
   }
 }

@@ -8,7 +8,7 @@ Aplicativo Windows para comparar arquivos ou pastas em dois ou três ambientes, 
 
 ## Usar
 
-1. Baixe o [instalador online](https://firawmerge.firawynix.com.br/downloads/FirawMerge-0.3.0-Online-Setup.exe) para Windows x86 ou x64. O instalador completo e as edições portáteis para cada arquitetura estão na [página do FirawMerge](https://firawmerge.firawynix.com.br/).
+1. Baixe o [instalador online](https://firawmerge.firawynix.com.br/downloads/FirawMerge-0.3.1-Online-Setup.exe) para Windows x86 ou x64. O instalador completo e as edições portáteis para cada arquitetura estão na [página do FirawMerge](https://firawmerge.firawynix.com.br/).
 2. Escolha **Pastas** ou **Arquivos** e preencha quaisquer dois dos campos 01/02/03. Se preencher os três, o 01 vira a base do merge. No modo Arquivos, os rótulos passam a Arquivo 01/02/03. Para comparar URLs, escolha **Página da Web** e digite os endereços.
 3. Escolha **Automático por arquivo**, **Texto**, **Tabela**, **Binário**, **Imagem** ou **Página da Web**. Depois de abrir um arquivo, o seletor permite recompará-lo em outro modo. A comparação automática reconhece CSV/TSV, formatos comuns de imagem, HTML e alguns formatos binários.
 4. Em Pastas, use máscaras como `*.txt;*.csv` e marque se deseja incluir subpastas. **Ocultar arquivos iguais** filtra a lista lateral; **Ocultar linhas iguais** funciona no texto, na tabela, no hexadecimal e no código-fonte HTML.
@@ -37,7 +37,7 @@ O menu principal do Windows 11 usa uma [extensão `IExplorerCommand` registrada 
 
 ## Instalador online e Firawynix Center
 
-`release/nsis-web/FirawMerge-0.3.0-Online-Setup.exe` é o instalador online universal x86/x64. Ele usa os arquivos `.nsis.7z` da mesma pasta para baixar somente a arquitetura necessária. O aplicativo instalado verifica `latest.yml` ao iniciar e depois a cada seis horas; baixa versões novas e aplica a atualização ao fechar. O Firawynix Center também usa o instalador NSIS e verifica a versão publicada antes de abrir o projeto. O instalador completo `release/FirawMerge-0.3.0-Setup.exe` funciona sem internet.
+`release/nsis-web/FirawMerge-0.3.1-Online-Setup.exe` é o instalador online universal x86/x64. Ele usa os arquivos `.nsis.7z` da mesma pasta para baixar somente a arquitetura necessária. O aplicativo instalado verifica `latest.yml` ao iniciar e depois a cada seis horas; baixa versões novas e aplica a atualização ao fechar. O Firawynix Center também usa o instalador NSIS e verifica a versão publicada antes de abrir o projeto. O instalador completo `release/FirawMerge-0.3.1-Setup.exe` funciona sem internet.
 
 Os downloads estão publicados em `https://firawmerge.firawynix.com.br/downloads/` e a entrada `firawmerge` está no catálogo remoto do Firawynix Center. `packaging/release-links.json` registra links, tamanhos e SHA-256; `packaging/firawmerge-center-project.json` contém a entrada correspondente. Os arquivos com sufixo `mock` permanecem por compatibilidade com o fluxo anterior e agora registram os mesmos valores de produção. Rode `npm run mock:release` para recalcular hashes após cada build. Publique também o novo `latest.yml` e os dois pacotes `.nsis.7z` a cada atualização. Não publique a chave privada do certificado.
 
@@ -58,7 +58,7 @@ A IA só pode ser acionada para arquivos de texto, tabela e HTML com diferença 
 ## Limites desta versão
 
 - Texto, tabela e HTML: UTF-8 ou UTF-16 LE até 2 MB por arquivo. Binário e imagem: até 8 MB por arquivo; hexadecimal mostra os primeiros 64 KB. Outras codificações não têm editor nesta versão.
-- Comparação de pastas até 20.000 arquivos; links simbólicos não são seguidos.
+- Comparação de pastas sem limite fixo de arquivos; o tempo de leitura depende da quantidade e do tamanho dos arquivos. Links simbólicos não são seguidos.
 - O relatório HTML inclui arquivos alterados e tem limite de 30 MB de dados. Não contém arquivos iguais. No modo Página da Web, o HTML exportado guarda o código-fonte capturado; scripts e recursos externos são bloqueados na prévia offline.
 - As funções mais avançadas do manual ainda não têm paridade: edição byte a byte, detecção visual por blocos e limiar de cor, imagens multipágina/PDF, árvore de recursos e capturas de página web e filtros por expressão. Veja a [matriz detalhada](docs/COBERTURA-WINMERGE.md).
 - A assinatura incluída é local/autogerada. Outra máquina precisa confiar no `.cer` para registrar o menu moderno e validar atualizações. O certificado vence em 24/09/2027; planeje a renovação antes de publicar atualizações após essa data.

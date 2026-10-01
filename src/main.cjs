@@ -107,7 +107,6 @@ async function collect(root, kind, format, mask, includeSubfolders) {
       if (entry.isFile()) {
         if (!fileMatchesMask(rel, mask)) continue;
         map.set(rel, full);
-        if (map.size > 20000) throw new Error('Pasta com mais de 20.000 arquivos. Selecione uma subpasta.');
       }
     }
   }
@@ -147,6 +146,35 @@ async function fingerprint(file) {
   return { size: stat.size, hash: hash.digest('hex') };
 }
 
+async function mapWithConcurrency(values, limit, task) {
+  const results = new Array(values.length);
+  let next = 0;
+  await Promise.all(Array.from({ length: Math.min(limit, values.length) }, async () => {
+    while (next < values.length) {
+      const index = next++;
+      results[index] = await task(values[index], index);
+    }
+  }));
+  return results;
+}
+
+async function compareRecords(files) {
+  const stats = await Promise.all(files.map(file => file ? fs.stat(file) : null));
+  const records = stats.map(stat => stat ? { size: stat.size, hash: `size:${stat.size}` } : null);
+  const bySize = new Map();
+  for (let i = 0; i < files.length; i++) {
+    if (!stats[i]) continue;
+    const peers = bySize.get(stats[i].size) || [];
+    peers.push(i);
+    bySize.set(stats[i].size, peers);
+  }
+  for (const peers of bySize.values()) {
+    if (peers.length < 2) continue;
+    await Promise.all(peers.map(async index => { records[index] = await fingerprint(files[index]); }));
+  }
+  return records;
+}
+
 function fileStatus(records, hasBase, kind, slots) {
   const present = records.map(Boolean);
   const type = kind === 'folder' ? 'Pasta' : 'Arquivo';
@@ -174,13 +202,13 @@ ipcMain.handle('workspace:open', async (_event, spec) => {
   const slots = selected.length === 3 ? [0, 1, 2] : [null, selected[0].index, selected[1].index];
   const maps = await Promise.all(roots.map(root => collect(root, kind, format, mask, includeSubfolders)));
   const keys = [...new Set(maps.flatMap(map => [...map.keys()]))].sort((a, b) => a.localeCompare(b, 'pt-BR'));
-  const items = [];
-  for (const key of keys) {
+  const items = await mapWithConcurrency(keys, 8, async key => {
     const files = maps.map(map => map.get(key) || null);
-    const records = await Promise.all(files.map(fingerprint));
+    const records = kind === 'file' && files.some(isHttpUrl)
+      ? await Promise.all(files.map(fingerprint)) : await compareRecords(files);
     const name = kind === 'file' ? isHttpUrl(roots[1]) ? path.basename(new URL(roots[1]).pathname) || new URL(roots[1]).hostname : path.basename(roots[1]) : key;
-    items.push({ key, name, files, status: fileStatus(records, !!roots[0], kind, slots), sizes: records.map(record => record?.size ?? null) });
-  }
+    return { key, name, files, status: fileStatus(records, !!roots[0], kind, slots), sizes: records.map(record => record?.size ?? null) };
+  });
   workspace = { kind, roots, slots, items, format, mask, includeSubfolders };
   return { kind, roots, slots, format, mask, includeSubfolders, items: items.map(({ files, ...item }) => item) };
 });

@@ -250,6 +250,29 @@ app.whenReady().then(async () => {
       await compare(); return document.getElementById('statusText').textContent;
     })()`);
     assert.equal(onePathMessage, 'Selecione pelo menos duas pastas ou arquivos.');
+    if (process.env.FIRAWMERGE_LARGE_SMOKE === '1') {
+      const large = path.join(temporary, 'large');
+      const empty = path.join(temporary, 'empty');
+      await Promise.all([fs.mkdir(large), fs.mkdir(empty)]);
+      for (let start = 0; start < 20001; start += 100) {
+        await Promise.all(Array.from({ length: Math.min(100, 20001 - start) }, (_, offset) =>
+          fs.writeFile(path.join(large, `file-${String(start + offset).padStart(5, '0')}.txt`), 'x')));
+      }
+      const largeUi = await win.webContents.executeJavaScript(`(async () => {
+        state.paths = ${JSON.stringify({ base: '', origin: large, destination: empty })};
+        await compare();
+        const list = document.getElementById('fileList');
+        const initialRows = list.querySelectorAll('.file-row').length;
+        list.scrollTop = list.scrollHeight;
+        await new Promise(resolve => requestAnimationFrame(() => requestAnimationFrame(resolve)));
+        return { total: state.workspace.items.length, initialRows,
+          finalRows: list.querySelectorAll('.file-row').length,
+          lastVisible: !![...list.querySelectorAll('.file-name')].find(node => node.textContent === 'file-20000.txt') };
+      })()`);
+      assert.equal(largeUi.total, 20001);
+      assert.ok(largeUi.initialRows < 100 && largeUi.finalRows < 100);
+      assert.equal(largeUi.lastVisible, true);
+    }
     console.log('Smoke: comparação, conflito e HTML exportado com sucesso.');
   } catch (error) {
     console.error(error);

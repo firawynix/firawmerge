@@ -14,10 +14,10 @@
   "capa": null,
   "banner": null,
   "icone": null,
-  "downloadUrl": "https://firawmerge.firawynix.com.br/downloads/FirawMerge-0.3.0-Online-Setup.exe",
-  "downloadTamanho": 759784,
-  "downloadSha256": "bbddd5a3986afc5a259a87ebf80db200cef3792e75731b5f8f22180b0d271d52",
-  "versao": "0.3.0",
+  "downloadUrl": "https://firawmerge.firawynix.com.br/downloads/FirawMerge-0.3.1-Online-Setup.exe",
+  "downloadTamanho": 759888,
+  "downloadSha256": "d67c7a99d4fabaec6f2c3131f8194b626d3e8055aa3a7a7950589498d7807482",
+  "versao": "0.3.1",
   "winSignerThumbprint": "668BEF56480FCA8EB1B0BC3B102A6A9CEC554CC4",
   "winChave": "f66155e3-52ac-59d2-ae5f-78317dd2d848",
   "winExe": "FirawMerge.exe",
@@ -34,15 +34,15 @@
   "extras": [
     {
       "rotulo": "Instalador completo (sem internet)",
-      "url": "https://firawmerge.firawynix.com.br/downloads/FirawMerge-0.3.0-Setup.exe"
+      "url": "https://firawmerge.firawynix.com.br/downloads/FirawMerge-0.3.1-Setup.exe"
     },
     {
       "rotulo": "Portátil x64",
-      "url": "https://firawmerge.firawynix.com.br/downloads/FirawMerge-0.3.0-x64.exe"
+      "url": "https://firawmerge.firawynix.com.br/downloads/FirawMerge-0.3.1-x64.exe"
     },
     {
       "rotulo": "Portátil x86",
-      "url": "https://firawmerge.firawynix.com.br/downloads/FirawMerge-0.3.0-ia32.exe"
+      "url": "https://firawmerge.firawynix.com.br/downloads/FirawMerge-0.3.1-ia32.exe"
     },
     {
       "rotulo": "Certificado público (.cer)",

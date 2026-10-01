@@ -78,16 +78,21 @@ window.firaw.onShellPaths(items => {
 
 function stat(value, label) { return `<div class="stat"><strong>${value}</strong><span>${label}</span></div>`; }
 
-function renderList() {
+const FILE_ROW_HEIGHT = 51;
+let visibleFiles = [];
+let fileListFrame = 0;
+
+function renderListWindow() {
   const list = $('fileList');
-  list.textContent = '';
-  if (!state.workspace) return;
-  const query = $('fileSearch').value.trim().toLocaleLowerCase('pt-BR');
-  const files = state.workspace.items.filter(item =>
-    (!$('hideEqualFiles').checked || item.status !== 'igual') && item.name.toLocaleLowerCase('pt-BR').includes(query));
-  if (!files.length) { list.innerHTML = '<div class="empty-list">Nenhum arquivo encontrado.</div>'; return; }
+  const scrollTop = list.scrollTop;
+  if (!visibleFiles.length) { list.innerHTML = '<div class="empty-list">Nenhum arquivo encontrado.</div>'; return; }
+  const start = Math.max(0, Math.floor(scrollTop / FILE_ROW_HEIGHT) - 8);
+  const count = Math.ceil(list.clientHeight / FILE_ROW_HEIGHT) + 16;
+  const end = Math.min(visibleFiles.length, start + count);
   const fragment = document.createDocumentFragment();
-  for (const item of files) {
+  const top = document.createElement('div'); top.style.height = `${start * FILE_ROW_HEIGHT}px`; top.setAttribute('aria-hidden', 'true'); fragment.append(top);
+  for (let i = start; i < end; i++) {
+    const item = visibleFiles[i];
     const button = document.createElement('button');
     button.className = `file-row${state.detail?.key === item.key ? ' active' : ''}`;
     const icon = document.createElement('span'); icon.className = 'file-icon'; icon.textContent = '≡';
@@ -100,7 +105,19 @@ function renderList() {
     info.append(name, status); button.append(icon, info, dot); button.onclick = () => selectFile(item.key);
     fragment.append(button);
   }
-  list.append(fragment);
+  const bottom = document.createElement('div'); bottom.style.height = `${(visibleFiles.length - end) * FILE_ROW_HEIGHT}px`; bottom.setAttribute('aria-hidden', 'true'); fragment.append(bottom);
+  list.replaceChildren(fragment);
+  list.scrollTop = scrollTop;
+}
+
+function renderList(resetScroll = false) {
+  const list = $('fileList');
+  if (!state.workspace) { visibleFiles = []; list.textContent = ''; return; }
+  const query = $('fileSearch').value.trim().toLocaleLowerCase('pt-BR');
+  visibleFiles = state.workspace.items.filter(item =>
+    (!$('hideEqualFiles').checked || item.status !== 'igual') && item.name.toLocaleLowerCase('pt-BR').includes(query));
+  if (resetScroll) list.scrollTop = 0;
+  renderListWindow();
 }
 
 function chosenLines(segment, index) {
@@ -681,8 +698,12 @@ window.firaw.onPullProgress(update => {
 });
 
 $('compareBtn').onclick = compare;
-$('fileSearch').oninput = renderList;
-$('hideEqualFiles').onchange = renderList;
+$('fileSearch').oninput = () => renderList(true);
+$('hideEqualFiles').onchange = () => renderList(true);
+$('fileList').onscroll = () => {
+  if (fileListFrame) return;
+  fileListFrame = requestAnimationFrame(() => { fileListFrame = 0; renderListWindow(); });
+};
 $('hideEqual').onchange = () => { if (state.detail && !state.detail.error) renderDiff(); };
 $('resultText').oninput = () => {
   if (!state.detail) return;
