@@ -55,7 +55,7 @@ const project = {
     { rotulo: 'Portátil x64', url: files[`FirawMerge-${pkg.version}-x64.exe`].url },
     { rotulo: 'Portátil x86', url: files[`FirawMerge-${pkg.version}-ia32.exe`].url },
     { rotulo: 'Certificado público (.cer)', url: files['FirawMergeContext.cer'].url },
-    { rotulo: 'Código-fonte no GitHub', url: 'https://github.com/hugomendoncaraizen/firawmerge' }
+    { rotulo: 'Código-fonte no GitHub', url: 'https://github.com/firawynix/firawmerge' }
   ],
   jogarUrl: null, siteUrl: 'https://firawmerge.firawynix.com.br/', destaque: false, ordem: 50
 };
