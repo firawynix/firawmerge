@@ -9,12 +9,15 @@ const base = pkg.build.publish[0].url;
 assert.match(base, /^https:\/\//);
 const online = path.join(root, 'release', 'nsis-web');
 const certificate = path.join(root, 'shell', 'build', 'FirawMergeContext.cer');
+assert.equal(pkg.build.nsisWeb.appPackageUrl, undefined, 'nsis-web deve calcular a URL de cada pacote pelo publish');
 fs.copyFileSync(certificate, path.join(online, 'FirawMergeContext.cer'));
+// O feed do aplicativo instalado usa o instalador completo; o online usa os .nsis.7z somente na instalação.
+fs.copyFileSync(path.join(root, 'release', 'latest.yml'), path.join(online, 'latest.yml'));
 for (const name of [`FirawMerge-${pkg.version}-Setup.exe`, `FirawMerge-${pkg.version}-x64.exe`, `FirawMerge-${pkg.version}-ia32.exe`]) {
   fs.copyFileSync(path.join(root, 'release', name), path.join(online, name));
 }
 const names = [
-  `FirawMerge-${pkg.version}-Online-Setup.exe`,
+  `FirawMerge-${pkg.version}-Online-Setup-r2.exe`,
   `firawmerge-${pkg.version}-x64.nsis.7z`,
   `firawmerge-${pkg.version}-ia32.nsis.7z`,
   'latest.yml',
@@ -30,7 +33,7 @@ const files = Object.fromEntries(names.map(name => {
 }));
 const latest = fs.readFileSync(path.join(online, 'latest.yml'), 'utf8');
 assert.ok(latest.includes(`version: ${pkg.version}`));
-for (const name of names.slice(0, 3)) {
+for (const name of [names[5]]) {
   const digest = crypto.createHash('sha512').update(fs.readFileSync(path.join(online, name))).digest('base64');
   assert.ok(latest.includes(digest), `latest.yml não corresponde a ${name}`);
 }

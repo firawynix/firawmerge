@@ -101,8 +101,7 @@
       "include": "installer/hooks.nsh"
     },
     "nsisWeb": {
-      "appPackageUrl": "https://firawmerge.firawynix.com.br/downloads/",
-      "artifactName": "FirawMerge-${version}-Online-Setup.${ext}"
+      "artifactName": "FirawMerge-${version}-Online-Setup-r2.${ext}"
     },
     "publish": [
       {

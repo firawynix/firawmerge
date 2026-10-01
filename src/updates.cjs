@@ -10,7 +10,7 @@ function startUpdates(app) {
   autoUpdater.autoInstallOnAppQuit = true;
   autoUpdater.logger = null;
   autoUpdater.on('error', error => {
-    // O feed é um link mock até a primeira publicação; falha de rede não bloqueia o app.
+    // Falha de rede no feed não bloqueia o aplicativo.
     process.stderr.write(`FirawMerge update: ${error.message}\n`);
   });
   const check = () => autoUpdater.checkForUpdates().catch(() => {});

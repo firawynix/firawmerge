@@ -3,25 +3,25 @@
   "base": "https://firawmerge.firawynix.com.br/downloads/",
   "version": "0.3.1",
   "files": {
-    "FirawMerge-0.3.1-Online-Setup.exe": {
-      "url": "https://firawmerge.firawynix.com.br/downloads/FirawMerge-0.3.1-Online-Setup.exe",
-      "size": 759888,
-      "sha256": "d67c7a99d4fabaec6f2c3131f8194b626d3e8055aa3a7a7950589498d7807482"
+    "FirawMerge-0.3.1-Online-Setup-r2.exe": {
+      "url": "https://firawmerge.firawynix.com.br/downloads/FirawMerge-0.3.1-Online-Setup-r2.exe",
+      "size": 759944,
+      "sha256": "505508a32788f26b272f824a9c45f8d15208fdaf16747ae33c9b24a28222be3d"
     },
     "firawmerge-0.3.1-x64.nsis.7z": {
       "url": "https://firawmerge.firawynix.com.br/downloads/firawmerge-0.3.1-x64.nsis.7z",
-      "size": 104872429,
-      "sha256": "3be3a9effd85dd3fc2ac168d97a3b6529923a837d76b4c3c5a08611ee9a24550"
+      "size": 104872417,
+      "sha256": "6d91110a8a51fe698533c14e573c07049f1383a38fdf15d960e1e9e154230999"
     },
     "firawmerge-0.3.1-ia32.nsis.7z": {
       "url": "https://firawmerge.firawynix.com.br/downloads/firawmerge-0.3.1-ia32.nsis.7z",
-      "size": 92245378,
-      "sha256": "debeefc9cf2f6ec050d786100f51c5c35f56903448fe8c0fa3720f2a82245514"
+      "size": 92245418,
+      "sha256": "c999c65f419a2cd0a3d7d268bb656368b9a041abbc6e69000390d68467f85c4f"
     },
     "latest.yml": {
       "url": "https://firawmerge.firawynix.com.br/downloads/latest.yml",
-      "size": 816,
-      "sha256": "61e3c8aa8219776c75d3091736cf31b271270b5575e8c7fc42a32166908e7044"
+      "size": 349,
+      "sha256": "78e570101719b9128bf8a9e037fa4ccabdf77cec4249d9e9da47526029ccc5cd"
     },
     "FirawMergeContext.cer": {
       "url": "https://firawmerge.firawynix.com.br/downloads/FirawMergeContext.cer",
