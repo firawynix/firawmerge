@@ -17,7 +17,7 @@ for (const name of [`FirawMerge-${pkg.version}-Setup.exe`, `FirawMerge-${pkg.ver
   fs.copyFileSync(path.join(root, 'release', name), path.join(online, name));
 }
 const names = [
-  `FirawMerge-${pkg.version}-Online-Setup-r2.exe`,
+  `FirawMerge-${pkg.version}-Online-Setup.exe`,
   `firawmerge-${pkg.version}-x64.nsis.7z`,
   `firawmerge-${pkg.version}-ia32.nsis.7z`,
   'latest.yml',

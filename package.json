@@ -1,7 +1,7 @@
 {
   "name": "firawmerge",
   "productName": "FirawMerge",
-  "version": "0.3.1",
+  "version": "0.3.2",
   "description": "Comparação, merge e revisão compartilhável de arquivos e ambientes",
   "author": "Firawynix",
   "license": "MIT",
@@ -101,7 +101,7 @@
       "include": "installer/hooks.nsh"
     },
     "nsisWeb": {
-      "artifactName": "FirawMerge-${version}-Online-Setup-r2.${ext}"
+      "artifactName": "FirawMerge-${version}-Online-Setup.${ext}"
     },
     "publish": [
       {
